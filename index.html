@@ -3,13 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GuardianEye 0.01</title>
+
+<title>GUARDIANEYE 0.01</title>
 
 <style>
+
+/* =========================================================
+   BASIC
+========================================================= */
+
 *{
-    box-sizing:border-box;
     margin:0;
     padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
 }
 
 html{
@@ -17,763 +24,1269 @@ html{
 }
 
 body{
-    min-height:100vh;
-    background:#02030a;
+    background:#020208;
     color:white;
-    font-family:Arial, Helvetica, sans-serif;
     overflow-x:hidden;
 }
 
-/* FUTURISTIC GRID */
+/* =========================================================
+   FUTURISTIC GRID BACKGROUND
+========================================================= */
+
 body::before{
     content:"";
     position:fixed;
     inset:0;
-    z-index:-5;
+
     background:
-        linear-gradient(rgba(0,255,255,.07) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(0,255,255,.07) 1px,transparent 1px);
-    background-size:58px 58px;
-    animation:gridMove 10s linear infinite;
+        linear-gradient(rgba(0,255,255,.045) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(150,0,255,.045) 1px,transparent 1px);
+
+    background-size:45px 45px;
+
+    animation:gridMove 12s linear infinite;
+
+    z-index:-5;
 }
 
 @keyframes gridMove{
-    from{background-position:0 0,0 0;}
-    to{background-position:58px 58px,58px 58px;}
+
+    from{
+        background-position:0 0;
+    }
+
+    to{
+        background-position:45px 45px;
+    }
+
 }
 
-/* GLOW */
+/* =========================================================
+   MOVING GLOW
+========================================================= */
+
 body::after{
     content:"";
+
     position:fixed;
-    width:600px;
-    height:600px;
+
+    width:650px;
+    height:650px;
+
     border-radius:50%;
+
     background:
-        radial-gradient(circle,
-        rgba(0,255,255,.12),
-        rgba(255,0,255,.07),
-        transparent 70%);
-    left:50%;
-    top:45%;
-    transform:translate(-50%,-50%);
+        radial-gradient(
+            circle,
+            rgba(0,255,255,.13),
+            rgba(130,0,255,.08),
+            transparent 70%
+        );
+
+    top:-200px;
+    left:-150px;
+
+    animation:orb 10s ease-in-out infinite alternate;
+
     z-index:-4;
-    animation:glowMove 7s ease-in-out infinite alternate;
 }
 
-@keyframes glowMove{
-    from{
-        transform:translate(-55%,-50%) scale(.8);
-    }
+@keyframes orb{
+
     to{
-        transform:translate(-45%,-50%) scale(1.2);
+        transform:
+            translate(75vw,60vh)
+            scale(1.4);
     }
+
 }
 
-/* MOVING TEXT */
-.moving{
+/* =========================================================
+   MOVING TOP TEXT
+========================================================= */
+
+.marquee{
     position:fixed;
-    white-space:nowrap;
-    z-index:-2;
-    opacity:.13;
-    font-size:18px;
-    font-weight:bold;
-    letter-spacing:5px;
-    color:#00ffff;
-    pointer-events:none;
-}
 
-.moving.one{
-    top:12%;
-    animation:moveRight 22s linear infinite;
-}
-
-.moving.two{
-    top:48%;
-    color:#ff00ff;
-    animation:moveLeft 25s linear infinite;
-}
-
-.moving.three{
-    top:82%;
-    animation:moveRight 30s linear infinite;
-}
-
-@keyframes moveRight{
-    from{transform:translateX(-100%);}
-    to{transform:translateX(100%);}
-}
-
-@keyframes moveLeft{
-    from{transform:translateX(100%);}
-    to{transform:translateX(-100%);}
-}
-
-/* SCANNING LIGHT */
-.scanline{
-    position:fixed;
+    top:0;
     left:0;
+
     width:100%;
-    height:2px;
-    background:linear-gradient(
-        90deg,
-        transparent,
-        #00ffff,
-        white,
-        #ff00ff,
-        transparent
-    );
-    box-shadow:
-        0 0 10px #00ffff,
-        0 0 25px #00ffff;
-    opacity:.6;
-    z-index:20;
-    pointer-events:none;
-    animation:scan 6s linear infinite;
+    height:35px;
+
+    overflow:hidden;
+
+    background:rgba(0,0,0,.72);
+
+    border-bottom:1px solid rgba(0,255,255,.5);
+
+    backdrop-filter:blur(12px);
+
+    z-index:1000;
 }
 
-@keyframes scan{
-    from{top:-5%;}
-    to{top:105%;}
+.marquee-track{
+
+    white-space:nowrap;
+
+    display:inline-block;
+
+    padding-left:100%;
+
+    animation:
+        marquee 25s linear infinite;
+
+    color:#00ffff;
+
+    font-size:12px;
+
+    letter-spacing:3px;
+
+    line-height:35px;
+
+    text-shadow:
+        0 0 5px #00ffff,
+        0 0 15px #00ffff;
+
 }
 
-/* MAIN */
+@keyframes marquee{
+
+    to{
+        transform:translateX(-100%);
+    }
+
+}
+
+/* =========================================================
+   PAGES
+========================================================= */
+
 .page{
-    display:none;
+
     min-height:100vh;
-    padding:45px 18px 60px;
-    animation:pageIn .8s ease;
+
+    display:none;
+
+    justify-content:center;
+    align-items:center;
+
+    padding:
+        80px 20px 50px;
+
+    position:relative;
+
 }
 
 .page.active{
+
     display:flex;
-    justify-content:center;
-    align-items:center;
+
+    animation:
+        pageIn .8s ease;
+
 }
 
 @keyframes pageIn{
+
     from{
         opacity:0;
-        transform:scale(.96);
-        filter:blur(8px);
+        transform:
+            scale(.96)
+            translateY(30px);
     }
+
     to{
         opacity:1;
-        transform:scale(1);
-        filter:blur(0);
+        transform:
+            scale(1)
+            translateY(0);
     }
+
 }
 
-/* GLASS BOX */
-.box{
-    width:100%;
-    max-width:760px;
-    padding:55px 38px;
-    border:2px solid rgba(0,255,255,.45);
-    border-radius:38px;
-    background:rgba(4,6,20,.84);
-    backdrop-filter:blur(15px);
-    box-shadow:
-        0 0 15px rgba(0,255,255,.18),
-        0 0 50px rgba(0,255,255,.08),
-        inset 0 0 30px rgba(0,255,255,.04);
-    position:relative;
-    overflow:hidden;
-}
+/* =========================================================
+   HOME
+========================================================= */
 
-/* MOVING BORDER */
-.box::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:-30%;
-    width:60%;
-    height:3px;
-    background:linear-gradient(
-        90deg,
-        transparent,
-        #00ffff,
-        white,
-        transparent
-    );
-    box-shadow:0 0 15px #00ffff;
-    animation:borderMove 4s linear infinite;
-}
-
-.box::after{
-    content:"";
-    position:absolute;
-    bottom:0;
-    right:-30%;
-    width:60%;
-    height:3px;
-    background:linear-gradient(
-        90deg,
-        transparent,
-        #ff00ff,
-        white,
-        transparent
-    );
-    box-shadow:0 0 15px #ff00ff;
-    animation:borderMove2 4s linear infinite;
-}
-
-@keyframes borderMove{
-    from{left:-30%;}
-    to{left:100%;}
-}
-
-@keyframes borderMove2{
-    from{right:-30%;}
-    to{right:100%;}
-}
-
-/* HOME */
 .home{
+
     text-align:center;
+
+    flex-direction:column;
+
 }
 
-.small-title{
-    font-size:15px;
-    letter-spacing:7px;
-    color:#00ffff;
-    margin-bottom:25px;
-    text-shadow:0 0 12px #00ffff;
-}
+.home h1{
 
-#welcomeText{
-    font-size:clamp(42px,9vw,82px);
-    font-weight:900;
-    letter-spacing:4px;
-    background:linear-gradient(
-        90deg,
-        #00ffff,
-        #ffffff,
-        #ff00ff,
-        #00ffff
-    );
+    font-size:
+        clamp(42px,9vw,100px);
+
+    letter-spacing:8px;
+
+    text-transform:uppercase;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00ffff,
+            #ffffff,
+            #b000ff,
+            #ff00cc,
+            #00ffff
+        );
+
     background-size:300%;
+
     -webkit-background-clip:text;
+
     color:transparent;
-    animation:gradientText 4s linear infinite;
+
+    animation:
+        gradient 5s linear infinite,
+        titleFloat 3s ease-in-out infinite;
+
 }
 
-@keyframes gradientText{
-    from{background-position:0%;}
-    to{background-position:300%;}
-}
+@keyframes gradient{
 
-#introText{
-    display:none;
-    opacity:0;
-    transform:scale(.6);
-    filter:blur(15px);
-}
-
-#introText.show{
-    display:block;
-    animation:introShow 1.5s ease forwards;
-}
-
-@keyframes introShow{
     to{
-        opacity:1;
-        transform:scale(1);
-        filter:blur(0);
+        background-position:300%;
     }
+
 }
 
-.intro-small{
-    font-size:18px;
-    letter-spacing:8px;
-    color:#aaa;
-    margin-bottom:12px;
+@keyframes titleFloat{
+
+    50%{
+        transform:translateY(-8px);
+    }
+
 }
 
-.intro-main{
-    font-size:clamp(36px,8vw,70px);
-    font-weight:900;
-    color:#00ffff;
-    text-shadow:
-        0 0 8px #00ffff,
-        0 0 25px #00ffff,
-        0 0 50px rgba(0,255,255,.5);
-    letter-spacing:5px;
-}
+.subtitle{
 
-.brand{
-    margin-top:35px;
-    font-size:24px;
-    letter-spacing:8px;
+    margin-top:20px;
+
+    font-size:
+        clamp(18px,4vw,32px);
+
     color:white;
-    text-shadow:0 0 12px #ff00ff;
-}
 
-.brand span{
-    color:#00ffff;
-}
-
-.status{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:12px;
-    margin:25px 0;
-}
-
-.status span{
-    padding:9px 15px;
-    border:1px solid rgba(0,255,255,.4);
-    border-radius:30px;
-    color:#00ffff;
-    font-size:12px;
-    letter-spacing:2px;
-    background:rgba(0,255,255,.04);
-    box-shadow:0 0 12px rgba(0,255,255,.1);
-}
-
-/* BUTTON */
-button{
-    border:none;
-    cursor:pointer;
-    font-weight:bold;
-    letter-spacing:4px;
-    color:#fff;
-    background:linear-gradient(
-        90deg,
-        #00aaff,
-        #00ffff,
-        #9d00ff,
-        #ff00ff
-    );
-    background-size:300%;
-    animation:buttonGradient 4s linear infinite;
-    box-shadow:
-        0 0 15px rgba(0,255,255,.5),
-        0 0 30px rgba(255,0,255,.2);
-    transition:.3s;
-}
-
-@keyframes buttonGradient{
-    from{background-position:0%;}
-    to{background-position:300%;}
-}
-
-button:hover{
-    transform:translateY(-4px) scale(1.04);
-    box-shadow:
-        0 0 20px #00ffff,
-        0 0 40px #ff00ff;
-}
-
-.hit{
-    margin-top:25px;
-    padding:17px 42px;
-    border-radius:50px;
-    font-size:16px;
-}
-
-/* PAGE TITLES */
-.page-title{
-    text-align:center;
-    margin-bottom:35px;
-}
-
-.page-title h1{
-    font-size:clamp(38px,8vw,70px);
-    color:#00ffff;
     letter-spacing:5px;
+
+}
+
+.product{
+
+    margin-top:20px;
+
+    font-size:
+        clamp(28px,6vw,60px);
+
+    color:#00ffff;
+
     text-shadow:
         0 0 10px #00ffff,
-        0 0 30px rgba(0,255,255,.5);
-}
+        0 0 30px #0088ff,
+        0 0 60px #5500ff;
 
-.page-title h1 span{
-    display:block;
-    color:#ff00ff;
-    text-shadow:
-        0 0 10px #ff00ff,
-        0 0 30px rgba(255,0,255,.5);
-}
-
-.page-title p{
-    margin-top:22px;
-    color:#aaa;
-    font-size:15px;
     letter-spacing:5px;
+
 }
 
-/* OPTIONS */
-.options{
+/* =========================================================
+   TAGS
+========================================================= */
+
+.tags{
+
     display:flex;
-    flex-direction:column;
-    gap:25px;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:12px;
+
+    margin:30px 0;
+
+}
+
+.tag{
+
+    padding:10px 18px;
+
+    border:1px solid #00ffff;
+
+    border-radius:30px;
+
+    color:#00ffff;
+
+    background:
+        rgba(0,255,255,.05);
+
+    box-shadow:
+        0 0 15px rgba(0,255,255,.2);
+
+    animation:
+        pulse 2s infinite;
+
+}
+
+@keyframes pulse{
+
+    50%{
+
+        box-shadow:
+            0 0 10px rgba(0,255,255,.2),
+            0 0 30px rgba(120,0,255,.2);
+
+    }
+
+}
+
+/* =========================================================
+   MAIN BUTTON
+========================================================= */
+
+.main-btn{
+
+    margin-top:30px;
+
+    padding:18px 55px;
+
+    border-radius:50px;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    letter-spacing:3px;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00aaff,
+            #8000ff,
+            #ff00aa
+        );
+
+    box-shadow:
+        0 0 15px #00ffff,
+        0 0 40px #8000ff;
+
+    transition:.4s;
+
+}
+
+.main-btn:hover{
+
+    transform:
+        scale(1.12);
+
+    box-shadow:
+        0 0 20px #00ffff,
+        0 0 70px #ff00cc;
+
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content{
+
+    width:min(1100px,100%);
+
+    text-align:center;
+
+}
+
+.content h1{
+
+    font-size:
+        clamp(38px,7vw,70px);
+
+    margin-bottom:20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #00ffff,
+            #a000ff,
+            #ff00cc
+        );
+
+    -webkit-background-clip:text;
+
+    color:transparent;
+
+}
+
+.intro{
+
+    color:#b8cfff;
+
+    letter-spacing:2px;
+
+    margin-bottom:30px;
+
+}
+
+/* =========================================================
+   OPTION GRID
+========================================================= */
+
+.options{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(180px,1fr));
+
+    gap:20px;
+
+    margin-top:35px;
+
 }
 
 .option{
-    width:100%;
-    min-height:150px;
-    border:2px solid rgba(0,255,255,.4);
-    border-radius:30px;
-    background:rgba(10,10,30,.55);
-    color:#00ffff;
-    font-size:26px;
+
+    min-height:130px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    padding:20px;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0,255,255,.08),
+            rgba(130,0,255,.08)
+        );
+
+    backdrop-filter:blur(15px);
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    letter-spacing:2px;
+
     transition:.4s;
+
     position:relative;
+
     overflow:hidden;
+
+    border:1px solid rgba(0,255,255,.35);
+
+    box-shadow:
+        inset 0 0 20px rgba(0,255,255,.03),
+        0 0 15px rgba(0,255,255,.08);
+
 }
+
+/* =========================================================
+   CHASING LIGHT — OPTIONS
+========================================================= */
 
 .option::before{
+
     content:"";
+
     position:absolute;
-    width:0;
-    height:100%;
-    left:0;
-    top:0;
-    background:linear-gradient(
-        90deg,
-        rgba(0,255,255,.12),
-        rgba(255,0,255,.12)
-    );
-    transition:.5s;
-}
 
-.option:hover::before{
-    width:100%;
-}
+    width:90px;
 
-.option:hover{
-    transform:translateY(-7px);
-    border-color:#00ffff;
+    height:3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #00ffff,
+            #ffffff,
+            #ff00ff,
+            transparent
+        );
+
     box-shadow:
-        0 0 20px rgba(0,255,255,.4),
-        0 0 35px rgba(255,0,255,.15);
-}
-
-/* NAME PAGE */
-.name-page{
-    text-align:center;
-}
-
-.name-logo{
-    font-size:clamp(35px,8vw,65px);
-    font-weight:900;
-    letter-spacing:5px;
-    line-height:1.05;
-    color:#00ffff;
-    text-shadow:
         0 0 8px #00ffff,
         0 0 20px #00ffff,
-        0 0 45px rgba(0,255,255,.45);
-    margin-bottom:10px;
+        0 0 35px #ff00ff;
+
+    animation:
+        chaseLight 3s linear infinite;
+
+    z-index:2;
+
 }
 
-.name-version{
-    font-size:clamp(35px,8vw,60px);
-    font-weight:900;
-    color:#ff00ff;
-    letter-spacing:5px;
-    text-shadow:
-        0 0 10px #ff00ff,
-        0 0 25px #ff00ff;
-    margin-bottom:40px;
+/* second glow */
+
+.option::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:30px;
+
+    height:30px;
+
+    border-radius:50%;
+
+    background:#00ffff;
+
+    filter:blur(15px);
+
+    opacity:.35;
+
+    animation:
+        cornerGlow 3s linear infinite;
+
 }
 
-.name-line{
-    width:120px;
-    height:3px;
-    margin:0 auto 40px;
-    background:linear-gradient(
-        90deg,
-        transparent,
-        #00ffff,
-        #ff00ff,
-        transparent
-    );
-    box-shadow:0 0 15px #00ffff;
+@keyframes chaseLight{
+
+    0%{
+
+        top:0;
+        left:-90px;
+        transform:rotate(0deg);
+
+    }
+
+    25%{
+
+        top:0;
+        left:100%;
+        transform:rotate(90deg);
+
+    }
+
+    50%{
+
+        top:100%;
+        left:100%;
+        transform:rotate(180deg);
+
+    }
+
+    75%{
+
+        top:100%;
+        left:-90px;
+        transform:rotate(270deg);
+
+    }
+
+    100%{
+
+        top:0;
+        left:-90px;
+        transform:rotate(360deg);
+
+    }
+
 }
 
-.info-card{
-    text-align:left;
-    margin:25px 0;
-    padding:28px;
-    border:1px solid rgba(0,255,255,.3);
-    border-radius:24px;
-    background:rgba(0,255,255,.025);
-    position:relative;
-    transition:.4s;
+@keyframes cornerGlow{
+
+    0%{
+
+        top:-15px;
+        left:-15px;
+
+    }
+
+    25%{
+
+        top:-15px;
+        left:calc(100% - 15px);
+
+    }
+
+    50%{
+
+        top:calc(100% - 15px);
+        left:calc(100% - 15px);
+
+    }
+
+    75%{
+
+        top:calc(100% - 15px);
+        left:-15px;
+
+    }
+
+    100%{
+
+        top:-15px;
+        left:-15px;
+
+    }
+
 }
 
-.info-card:hover{
-    transform:translateY(-5px);
+/* =========================================================
+   OPTION HOVER
+========================================================= */
+
+.option:hover{
+
+    transform:
+        translateY(-12px)
+        scale(1.03);
+
     border-color:#00ffff;
-    box-shadow:0 0 25px rgba(0,255,255,.15);
+
+    box-shadow:
+        0 0 15px #00ffff,
+        0 0 40px #7b00ff,
+        inset 0 0 30px rgba(255,0,255,.08);
+
 }
 
-.info-card h2{
-    color:#00ffff;
-    font-size:22px;
-    letter-spacing:3px;
-    margin-bottom:15px;
-}
+/* =========================================================
+   CONTENT CARDS
+========================================================= */
 
-.info-card h3{
-    color:#ff00ff;
-    font-size:18px;
-    margin:12px 0;
-}
+.cards{
 
-.info-card p{
-    color:#ddd;
-    font-size:17px;
-    line-height:1.8;
-}
+    display:grid;
 
-/* CONTENT LIST */
-.content{
-    display:flex;
-    flex-direction:column;
-    gap:18px;
+    gap:20px;
+
+    margin-top:30px;
+
 }
 
 .content-card{
-    padding:22px 24px;
-    border-left:3px solid #00ffff;
-    border-right:1px solid rgba(255,0,255,.25);
-    border-radius:18px;
-    background:rgba(10,10,30,.55);
-    color:#ddd;
-    font-size:17px;
-    line-height:1.7;
-    transition:.35s;
+
+    position:relative;
+
+    overflow:hidden;
+
+    text-align:left;
+
+    padding:25px;
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,255,255,.06),
+            rgba(150,0,255,.08)
+        );
+
+    backdrop-filter:blur(15px);
+
+    transition:.4s;
+
+    line-height:1.8;
+
+    border:
+        1px solid rgba(0,255,255,.35);
+
+    box-shadow:
+        0 0 20px rgba(0,255,255,.05);
+
 }
+
+/* =========================================================
+   CHASING LIGHT — CONTENT CARDS
+========================================================= */
+
+.content-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:100px;
+
+    height:3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #00ffff,
+            #ffffff,
+            #ff00ff,
+            transparent
+        );
+
+    box-shadow:
+        0 0 8px #00ffff,
+        0 0 20px #00ffff,
+        0 0 35px #ff00ff;
+
+    animation:
+        chaseCard 4s linear infinite;
+
+    z-index:2;
+
+}
+
+@keyframes chaseCard{
+
+    0%{
+
+        top:0;
+        left:-100px;
+        transform:rotate(0deg);
+
+    }
+
+    25%{
+
+        top:0;
+        left:100%;
+        transform:rotate(90deg);
+
+    }
+
+    50%{
+
+        top:100%;
+        left:100%;
+        transform:rotate(180deg);
+
+    }
+
+    75%{
+
+        top:100%;
+        left:-100px;
+        transform:rotate(270deg);
+
+    }
+
+    100%{
+
+        top:0;
+        left:-100px;
+        transform:rotate(360deg);
+
+    }
+
+}
+
+/* =========================================================
+   CARD HOVER
+========================================================= */
 
 .content-card:hover{
-    transform:translateX(6px);
-    border-left-color:#ff00ff;
-    box-shadow:0 0 20px rgba(0,255,255,.12);
+
+    transform:
+        translateX(8px)
+        scale(1.01);
+
+    border-color:#00ffff;
+
+    box-shadow:
+        0 0 20px rgba(0,255,255,.25),
+        0 0 50px rgba(100,0,255,.15);
+
 }
 
-/* COST */
-.cost-card{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:20px;
-    padding:20px 22px;
-    margin:12px 0;
-    border:1px solid rgba(0,255,255,.25);
-    border-radius:16px;
-    background:rgba(10,10,30,.55);
-    font-size:17px;
-}
+/* =========================================================
+   TEXT
+========================================================= */
 
-.cost-card span:last-child{
+.content-card strong{
+
     color:#00ffff;
-    font-weight:bold;
-    font-size:20px;
-    text-shadow:0 0 10px #00ffff;
+
+    text-shadow:
+        0 0 8px #00ffff;
+
 }
 
-.selling{
-    margin-top:25px;
-    padding:25px;
-    border:2px solid #ff00ff;
-    border-radius:20px;
-    text-align:center;
-    box-shadow:0 0 25px rgba(255,0,255,.18);
-}
+.content-card h2{
 
-.selling h2{
-    color:#ff00ff;
-    letter-spacing:3px;
-}
-
-.selling p{
-    margin-top:10px;
-    font-size:32px;
-    font-weight:bold;
     color:#00ffff;
+
+    margin-bottom:10px;
+
+    text-shadow:
+        0 0 10px rgba(0,255,255,.5);
+
 }
 
-/* BACK BUTTON */
+.content-card h3{
+
+    color:#ff00cc;
+
+    margin-bottom:10px;
+
+}
+
+/* =========================================================
+   NAME PAGE
+========================================================= */
+
+.name-title{
+
+    font-size:
+        clamp(45px,9vw,100px);
+
+    color:#00ffff;
+
+    text-shadow:
+        0 0 10px #00ffff,
+        0 0 40px #0066ff,
+        0 0 80px #8000ff;
+
+    animation:
+        neon 2s ease-in-out infinite alternate;
+
+}
+
+@keyframes neon{
+
+    to{
+
+        text-shadow:
+            0 0 20px #00ffff,
+            0 0 60px #8000ff,
+            0 0 100px #ff00cc;
+
+    }
+
+}
+
+.name-number{
+
+    font-size:35px;
+
+    color:#ff00cc;
+
+    letter-spacing:8px;
+
+    text-shadow:
+        0 0 15px #ff00cc;
+
+}
+
+/* =========================================================
+   COST
+========================================================= */
+
+.cost-box{
+
+    margin:30px auto;
+
+    max-width:700px;
+
+}
+
+.price{
+
+    font-size:60px;
+
+    color:#00ffff;
+
+    text-shadow:
+        0 0 15px #00ffff,
+        0 0 50px #0066ff;
+
+    margin:20px;
+
+    animation:
+        priceGlow 2s ease-in-out infinite alternate;
+
+}
+
+@keyframes priceGlow{
+
+    to{
+
+        text-shadow:
+            0 0 25px #00ffff,
+            0 0 70px #8000ff;
+
+    }
+
+}
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
 .back{
-    display:block;
-    margin:35px auto 0;
-    padding:15px 25px;
-    border-radius:40px;
-    font-size:13px;
+
+    margin-top:35px;
+
+    padding:13px 30px;
+
+    border-radius:30px;
+
+    background:transparent;
+
+    border:1px solid #00ffff;
+
+    color:#00ffff;
+
+    font-size:15px;
+
+    letter-spacing:2px;
+
+    transition:.3s;
+
 }
 
-/* MOBILE */
+.back:hover{
+
+    background:#00ffff;
+
+    color:#000;
+
+    box-shadow:
+        0 0 15px #00ffff,
+        0 0 40px #00ffff;
+
+    transform:
+        scale(1.05);
+
+}
+
+/* =========================================================
+   FLOATING PARTICLES
+========================================================= */
+
+.particle{
+
+    position:fixed;
+
+    width:3px;
+    height:3px;
+
+    background:#00ffff;
+
+    border-radius:50%;
+
+    box-shadow:
+        0 0 10px #00ffff;
+
+    animation:
+        float 8s linear infinite;
+
+    z-index:-1;
+
+}
+
+@keyframes float{
+
+    from{
+
+        transform:
+            translateY(100vh);
+
+        opacity:0;
+
+    }
+
+    20%{
+        opacity:1;
+    }
+
+    to{
+
+        transform:
+            translateY(-10vh);
+
+        opacity:0;
+
+    }
+
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
 @media(max-width:600px){
 
     .page{
-        padding:25px 12px 50px;
+
+        padding:
+            70px 14px 40px;
+
     }
 
-    .box{
-        padding:40px 20px;
-        border-radius:28px;
+    .home h1{
+
+        letter-spacing:3px;
+
+    }
+
+    .subtitle{
+
+        letter-spacing:2px;
+
+    }
+
+    .product{
+
+        letter-spacing:2px;
+
+    }
+
+    .options{
+
+        grid-template-columns:
+            1fr 1fr;
+
     }
 
     .option{
-        min-height:125px;
-        font-size:22px;
-    }
 
-    .page-title p{
-        line-height:1.6;
-        letter-spacing:3px;
-    }
+        min-height:110px;
 
-    .info-card{
-        padding:22px 18px;
+        font-size:14px;
+
     }
 
     .content-card{
-        font-size:15px;
+
+        font-size:14px;
+
     }
 
-    .cost-card{
-        font-size:15px;
+    .name-number{
+
+        font-size:25px;
+
     }
 
-    .cost-card span:last-child{
-        font-size:17px;
-    }
 }
+
+/* =========================================================
+   EXTRA SMALL PHONES
+========================================================= */
+
+@media(max-width:380px){
+
+    .options{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+/* =========================================================
+   END CSS
+========================================================= */
+
 </style>
 </head>
 
+
 <body>
 
-<div class="scanline"></div>
 
-<!-- MOVING FUTURISTIC TEXT -->
-<div class="moving one">
-GUARDIANEYE 0.01 • AI VISION • SMART SURVEILLANCE • FUTURE SECURITY • ADVANCED CAMERA • GUARDIANEYE 0.01 •
+<!-- ======================================================
+     MOVING TOP TEXT
+====================================================== -->
+
+<div class="marquee">
+
+<div class="marquee-track">
+
+GUARDIANEYE 0.01 • AI VISION • SMART SURVEILLANCE • FUTURE SECURITY • ADVANCED CAMERA • GUARDIANEYE 0.01 • NEXT GENERATION • INTELLIGENT SECURITY • LIVE DETECTION • NIGHT VISION • FUTURE TECHNOLOGY • GUARDIANEYE • SYSTEM • FUTURE CAMERA • SMART VISION • ADVANCED PROTECTION • GUARDIANEYE 0.01 • NEXT GENERATION TECH •
+
 </div>
 
-<div class="moving two">
-NEXT GENERATION • INTELLIGENT SECURITY • LIVE DETECTION • NIGHT VISION • FUTURE TECHNOLOGY • GUARDIANEYE •
-</div>
-
-<div class="moving three">
-SYSTEM • FUTURE CAMERA • SMART VISION • ADVANCED PROTECTION • GUARDIANEYE 0.01 • NEXT GENERATION TECH •
 </div>
 
 
-<!-- ================= HOME ================= -->
-<section id="home" class="page active">
+<!-- ======================================================
+     FLOATING PARTICLES
+====================================================== -->
 
-<div class="box home">
+<div class="particle" style="left:5%;animation-delay:1s"></div>
+<div class="particle" style="left:15%;animation-delay:4s"></div>
+<div class="particle" style="left:25%;animation-delay:2s"></div>
+<div class="particle" style="left:35%;animation-delay:6s"></div>
+<div class="particle" style="left:45%;animation-delay:3s"></div>
+<div class="particle" style="left:55%;animation-delay:7s"></div>
+<div class="particle" style="left:65%;animation-delay:2s"></div>
+<div class="particle" style="left:75%;animation-delay:5s"></div>
+<div class="particle" style="left:85%;animation-delay:1s"></div>
+<div class="particle" style="left:95%;animation-delay:6s"></div>
 
-<div class="small-title">
-NEXT GENERATION TECH
-</div>
 
-<h1 id="welcomeText">
+<!-- ======================================================
+     HOME PAGE
+====================================================== -->
+
+<section id="home" class="page active home">
+
+<h1>
 WELCOME TO FUTURE
 </h1>
 
-<div id="introText">
-
-<div class="intro-small">
+<div class="subtitle">
 INTRODUCING YOU TO
 </div>
 
-<div class="intro-main">
+<div class="product">
 FUTURE CCTV
 </div>
 
-<div class="brand">
-GUARDIANEYE <span>0.01</span>
+<div class="product">
+GUARDIANEYE 0.01
 </div>
 
-<div class="status">
-<span>AI VISION</span>
-<span>SMART SECURITY</span>
-<span>FUTURE READY</span>
+<div class="tags">
+
+<div class="tag">
+AI VISION
 </div>
 
-<button class="hit" onclick="showPage('menu')">
+<div class="tag">
+SMART SECURITY
+</div>
+
+<div class="tag">
+FUTURE READY
+</div>
+
+</div>
+
+<button
+class="main-btn"
+onclick="showPage('options')">
+
 HIT ME!
+
 </button>
 
-</div>
-
-</div>
 </section>
 
 
-<!-- ================= MENU ================= -->
-<section id="menu" class="page">
+<!-- ======================================================
+     OPTIONS PAGE
+====================================================== -->
 
-<div class="box">
+<section id="options" class="page">
 
-<div class="page-title">
+<div class="content">
 
 <h1>
-GuardianEye
-<span>0.01</span>
+GuardianEye 0.01
 </h1>
 
-<p>
+<p class="intro">
 SELECT AN OPTION TO EXPLORE OUR PRODUCT
 </p>
 
-</div>
 
 <div class="options">
 
-<button class="option" onclick="showPage('name')">
+<button
+class="option"
+onclick="showPage('name')">
+
 NAME
+
 </button>
 
-<button class="option" onclick="showPage('features')">
+
+<button
+class="option"
+onclick="showPage('features')">
+
 FEATURES
+
 </button>
 
-<button class="option" onclick="showPage('advantages')">
+
+<button
+class="option"
+onclick="showPage('advantages')">
+
 ADVANTAGES
+
 </button>
 
-<button class="option" onclick="showPage('disadvantages')">
+
+<button
+class="option"
+onclick="showPage('disadvantages')">
+
 DISADVANTAGES
+
 </button>
 
-<button class="option" onclick="showPage('cost')">
+
+<button
+class="option"
+onclick="showPage('cost')">
+
 COST
+
 </button>
 
 </div>
 
-<button class="back" onclick="showPage('home')">
+
+<button
+class="back"
+onclick="showPage('home')">
+
 ← GO TO HOME
+
 </button>
 
 </div>
+
 </section>
 
 
-<!-- ================= NAME ================= -->
+<!-- ======================================================
+     NAME PAGE
+====================================================== -->
+
 <section id="name" class="page">
 
-<div class="box name-page">
+<div class="content">
 
-<div class="name-logo">
+<div class="name-title">
 GUARDIANEYE
 </div>
 
-<div class="name-version">
+<div class="name-number">
 0.01
 </div>
 
-<div class="name-line"></div>
+
+<div class="cards">
 
 
-<div class="info-card">
+<div class="content-card">
 
 <h2>
 Why we choosed?
@@ -784,265 +1297,422 @@ Because,
 </h3>
 
 <p>
+
 This name represents protection, advanced surveillance and it represents the future of intelligent camera systems.
+
 </p>
 
 </div>
 
 
-<div class="info-card">
+<div class="content-card">
 
 <h2>
 From where we choosed?
 </h2>
 
 <p>
+
 The name was selected after considering futuristic technology, smart vision and next-generation design from internet.
+
 </p>
 
 </div>
 
 
-<button class="back" onclick="showPage('menu')">
+</div>
+
+
+<button
+class="back"
+onclick="showPage('options')">
+
 ← BACK TO OPTIONS
+
 </button>
 
 </div>
+
 </section>
 
 
-<!-- ================= FEATURES ================= -->
+<!-- ======================================================
+     FEATURES
+====================================================== -->
+
 <section id="features" class="page">
 
-<div class="box">
-
-<div class="page-title">
-<h1>FEATURES</h1>
-</div>
-
 <div class="content">
 
-<div class="content-card">
-1) This cctv has a speaker to alert and announce
-</div>
+<h1>
+FEATURES
+</h1>
+
+
+<div class="cards">
+
 
 <div class="content-card">
-2) It has night detection and powerful light so that we can avoid street lights
+
+<strong>01</strong><br>
+
+Gurdianeye 0.01 has 8k clarity, night vision, and motion detection.
+
 </div>
+
 
 <div class="content-card">
-3) It is 24/7 charged by wind, light and sound energy
+
+<strong>02</strong><br>
+
+It has a high voltage led panel(street light). By this innovation we can avoid number street lights.
+
 </div>
+
 
 <div class="content-card">
-4) It has 10 anesthesia bullets.<br>
-In case of trouble in that area this cctv shoots the person to sleep ,before it is late for the police.In case of no bullets it shoots electric pulse.
+
+<strong>03</strong><br>
+
+gurdianeye 0.01 has a mini drone which helps in tracking a vehicle or a person.
+
 </div>
+
 
 <div class="content-card">
-5) It has an anesthesia bomb to handle the chaos crowd.
+
+<strong>04</strong><br>
+
+It has a speaker which is not a usual speaker. It is a different speaker because its working s are same as normal speakers but engineering is different
+
 </div>
+
 
 <div class="content-card">
-6) It has live detection of face and motion and sends notifications.
+
+<strong>05</strong><br>
+
+guardianeye 0.01 has a self defence system in the pole and its body (integrated electric shock)
+
 </div>
+
 
 <div class="content-card">
-7) It has in built drone in case of far target to shoot or track.
+
+<strong>06</strong><br>
+
+gurdianeye 0.01 Has 4 energy sources
+
+<br><br>
+
+1-wind energy<br>
+2-sound energy<br>
+3-solar energy<br>
+4-rain energy
+
 </div>
+
 
 <div class="content-card">
-8) It is protected by a shock field so nobody can touch or mess up with it
-</div>
+
+<strong>07</strong><br>
+
+gurdianeye 0.01 Has a super innovation which present advanced cctv doesn't have. It has annesthia bullets to catch or to Stop people from fighting and it has an annesthia bomb  to control the crowd
 
 </div>
 
-<button class="back" onclick="showPage('menu')">
+
+<div class="content-card">
+
+<strong>08</strong><br>
+
+It has in built drone in case of far target to shoot or track.
+
+</div>
+
+
+</div>
+
+
+<button
+class="back"
+onclick="showPage('options')">
+
 ← BACK TO OPTIONS
+
 </button>
 
 </div>
+
 </section>
 
 
-<!-- ================= ADVANTAGES ================= -->
+<!-- ======================================================
+     ADVANTAGES
+====================================================== -->
+
 <section id="advantages" class="page">
 
-<div class="box">
-
-<div class="page-title">
-<h1>ADVANTAGES</h1>
-</div>
-
 <div class="content">
 
-<div class="content-card">
-1) cheap and easly aviliable
-</div>
+<h1>
+ADVANTAGES
+</h1>
+
+
+<div class="cards">
+
 
 <div class="content-card">
-2)no need of providing power connection
+
+<strong>01</strong><br>
+
+It is easy to make
+
 </div>
+
 
 <div class="content-card">
-3) High accuracy, 8k vision + night vision clarity
+
+<strong>02</strong><br>
+
+no need of providing power connection
+
 </div>
+
 
 <div class="content-card">
-4) help avoid many street lights
+
+<strong>03</strong><br>
+
+High accuracy, 8k vision + night vision clarity
+
 </div>
+
 
 <div class="content-card">
-5) helps to avoid fighting and crowd
-</div>
+
+<strong>04</strong><br>
+
+help avoid many street lights
 
 </div>
 
-<button class="back" onclick="showPage('menu')">
+
+<div class="content-card">
+
+<strong>05</strong><br>
+
+helps to avoid fighting and crowd
+
+</div>
+
+
+</div>
+
+
+<button
+class="back"
+onclick="showPage('options')">
+
 ← BACK TO OPTIONS
+
 </button>
 
 </div>
+
 </section>
 
 
-<!-- ================= DISADVANTAGES ================= -->
+<!-- ======================================================
+     DISADVANTAGES
+====================================================== -->
+
 <section id="disadvantages" class="page">
 
-<div class="box">
-
-<div class="page-title">
-<h1>DISADVANTAGES</h1>
-</div>
-
 <div class="content">
 
-<div class="content-card">
-1) takes time to adjust(to learn)
-</div>
+<h1>
+DISADVANTAGES
+</h1>
+
+
+<div class="cards">
+
 
 <div class="content-card">
-2) Requires maintenance if anything happens(like tunderhit , failuer of enery suppy)
-</div>
+
+<strong>01</strong><br>
+
+takes time to adjust(to learn)
 
 </div>
 
-<button class="back" onclick="showPage('menu')">
+
+<div class="content-card">
+
+<strong>02</strong><br>
+
+Requires maintenance if anything happens(like tunderhit , failuer of enery suppy)
+
+</div>
+
+
+</div>
+
+
+<button
+class="back"
+onclick="showPage('options')">
+
 ← BACK TO OPTIONS
+
 </button>
 
 </div>
+
 </section>
 
 
-<!-- ================= COST ================= -->
+<!-- ======================================================
+     COST
+====================================================== -->
+
 <section id="cost" class="page">
 
-<div class="box">
+<div class="content">
 
-<div class="page-title">
-<h1>COST</h1>
-</div>
+<h1>
+COST
+</h1>
 
-<div class="selling">
+
+<div class="cards cost-box">
+
+
+<div class="content-card">
 
 <h2>
 MAKING COST
 </h2>
 
+<br>
+
+1) camera ₹1000<br>
+
+2) LIGHT ₹500<br>
+
+3) energy supply ₹1000<br>
+
+4) bullets and bombs ₹2000<br>
+
+4) CIRCUIT ₹1000
+
 </div>
 
-<div class="cost-card">
-<span>1) camera</span>
-<span>₹1000</span>
-</div>
 
-<div class="cost-card">
-<span>2) LIGHT</span>
-<span>₹500</span>
-</div>
-
-<div class="cost-card">
-<span>3) energy supply</span>
-<span>₹1000</span>
-</div>
-
-<div class="cost-card">
-<span>4) bullets and bombs</span>
-<span>₹2000</span>
-</div>
-
-<div class="cost-card">
-<span>4) CIRCUIT</span>
-<span>₹1000</span>
-</div>
-
-<div class="selling">
+<div class="content-card">
 
 <h2>
 SELLING COST
 </h2>
 
-<p>
-₹5500
-</p>
+<div class="price">
+
+₹5000
 
 </div>
 
-<button class="back" onclick="showPage('menu')">
+</div>
+
+
+</div>
+
+
+<button
+class="back"
+onclick="showPage('options')">
+
 ← BACK TO OPTIONS
+
 </button>
 
 </div>
+
 </section>
 
 
+<!-- ======================================================
+     JAVASCRIPT
+====================================================== -->
+
 <script>
 
-/* PAGE NAVIGATION */
+/* =========================================================
+   PAGE NAVIGATION
+========================================================= */
+
 function showPage(pageId){
 
-    const pages = document.querySelectorAll(".page");
+    document
+        .querySelectorAll(".page")
+        .forEach(page => {
 
-    pages.forEach(function(page){
-        page.classList.remove("active");
+            page.classList.remove("active");
+
+        });
+
+
+    const target =
+        document.getElementById(pageId);
+
+
+    target.classList.add("active");
+
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
     });
 
-    const target = document.getElementById(pageId);
-
-    if(target){
-        target.classList.add("active");
-
-        window.scrollTo({
-            top:0,
-            behavior:"smooth"
-        });
-    }
 }
 
 
-/* HOME INTRO TRANSITION */
-setTimeout(function(){
+/* =========================================================
+   EXTRA FLOATING PARTICLES
+========================================================= */
 
-    const welcome = document.getElementById("welcomeText");
-    const intro = document.getElementById("introText");
+for(let i=0;i<30;i++){
 
-    welcome.style.transition = "all 1s ease";
-    welcome.style.opacity = "0";
-    welcome.style.transform = "scale(.65)";
-    welcome.style.filter = "blur(15px)";
+    const particle =
+        document.createElement("div");
 
-    setTimeout(function(){
 
-        welcome.style.display = "none";
+    particle.className =
+        "particle";
 
-        intro.classList.add("show");
 
-    },800);
+    particle.style.left =
+        Math.random()*100+"%";
 
-},3000);
+
+    particle.style.animationDuration =
+        (5 + Math.random()*8)+"s";
+
+
+    particle.style.animationDelay =
+        Math.random()*8+"s";
+
+
+    document.body.appendChild(particle);
+
+}
 
 </script>
 
+
 </body>
-  </html>
+</html>
