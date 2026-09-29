@@ -8,10 +8,6 @@
 
 <style>
 
-/* =========================================================
-   BASIC
-========================================================= */
-
 *{
     margin:0;
     padding:0;
@@ -30,7 +26,7 @@ body{
 }
 
 /* =========================================================
-   FUTURISTIC GRID BACKGROUND
+   FUTURISTIC GRID
 ========================================================= */
 
 body::before{
@@ -50,15 +46,8 @@ body::before{
 }
 
 @keyframes gridMove{
-
-    from{
-        background-position:0 0;
-    }
-
-    to{
-        background-position:45px 45px;
-    }
-
+    from{background-position:0 0;}
+    to{background-position:45px 45px;}
 }
 
 /* =========================================================
@@ -67,7 +56,6 @@ body::before{
 
 body::after{
     content:"";
-
     position:fixed;
 
     width:650px;
@@ -92,17 +80,15 @@ body::after{
 }
 
 @keyframes orb{
-
     to{
         transform:
             translate(75vw,60vh)
             scale(1.4);
     }
-
 }
 
 /* =========================================================
-   MOVING TOP TEXT
+   TOP MARQUEE
 ========================================================= */
 
 .marquee{
@@ -126,7 +112,6 @@ body::after{
 }
 
 .marquee-track{
-
     white-space:nowrap;
 
     display:inline-block;
@@ -147,15 +132,12 @@ body::after{
     text-shadow:
         0 0 5px #00ffff,
         0 0 15px #00ffff;
-
 }
 
 @keyframes marquee{
-
     to{
         transform:translateX(-100%);
     }
-
 }
 
 /* =========================================================
@@ -163,7 +145,6 @@ body::after{
 ========================================================= */
 
 .page{
-
     min-height:100vh;
 
     display:none;
@@ -171,24 +152,19 @@ body::after{
     justify-content:center;
     align-items:center;
 
-    padding:
-        80px 20px 50px;
+    padding:80px 20px 50px;
 
     position:relative;
-
 }
 
 .page.active{
-
     display:flex;
 
     animation:
         pageIn .8s ease;
-
 }
 
 @keyframes pageIn{
-
     from{
         opacity:0;
         transform:
@@ -202,7 +178,6 @@ body::after{
             scale(1)
             translateY(0);
     }
-
 }
 
 /* =========================================================
@@ -210,15 +185,11 @@ body::after{
 ========================================================= */
 
 .home{
-
     text-align:center;
-
     flex-direction:column;
-
 }
 
 .home h1{
-
     font-size:
         clamp(42px,9vw,100px);
 
@@ -245,27 +216,21 @@ body::after{
     animation:
         gradient 5s linear infinite,
         titleFloat 3s ease-in-out infinite;
-
 }
 
 @keyframes gradient{
-
     to{
         background-position:300%;
     }
-
 }
 
 @keyframes titleFloat{
-
     50%{
         transform:translateY(-8px);
     }
-
 }
 
 .subtitle{
-
     margin-top:20px;
 
     font-size:
@@ -274,11 +239,9 @@ body::after{
     color:white;
 
     letter-spacing:5px;
-
 }
 
 .product{
-
     margin-top:20px;
 
     font-size:
@@ -292,7 +255,6 @@ body::after{
         0 0 60px #5500ff;
 
     letter-spacing:5px;
-
 }
 
 /* =========================================================
@@ -300,11 +262,9 @@ body::after{
 ========================================================= */
 
 .tags{
-
     display:flex;
 
     justify-content:center;
-
     align-items:center;
 
     flex-wrap:wrap;
@@ -312,11 +272,9 @@ body::after{
     gap:12px;
 
     margin:30px 0;
-
 }
 
 .tag{
-
     padding:10px 18px;
 
     border:1px solid #00ffff;
@@ -333,19 +291,14 @@ body::after{
 
     animation:
         pulse 2s infinite;
-
 }
 
 @keyframes pulse{
-
     50%{
-
         box-shadow:
             0 0 10px rgba(0,255,255,.2),
             0 0 30px rgba(120,0,255,.2);
-
     }
-
 }
 
 /* =========================================================
@@ -353,12 +306,13 @@ body::after{
 ========================================================= */
 
 .main-btn{
-
     margin-top:30px;
 
     padding:18px 55px;
 
     border-radius:50px;
+
+    border:none;
 
     font-size:18px;
 
@@ -382,17 +336,67 @@ body::after{
 
     transition:.4s;
 
+    cursor:pointer;
 }
 
 .main-btn:hover{
-
-    transform:
-        scale(1.12);
+    transform:scale(1.12);
 
     box-shadow:
         0 0 20px #00ffff,
         0 0 70px #ff00cc;
+}
 
+/* =========================================================
+   MUSIC BUTTON
+========================================================= */
+
+.music-btn{
+    position:fixed;
+
+    right:20px;
+    bottom:20px;
+
+    padding:13px 20px;
+
+    border-radius:30px;
+
+    border:1px solid #00ffff;
+
+    background:rgba(0,0,0,.75);
+
+    color:#00ffff;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    letter-spacing:2px;
+
+    cursor:pointer;
+
+    backdrop-filter:blur(10px);
+
+    box-shadow:
+        0 0 10px #00ffff,
+        0 0 25px #8000ff;
+
+    z-index:9999;
+
+    transition:.3s;
+}
+
+.music-btn:hover{
+    transform:scale(1.08);
+
+    color:white;
+
+    border-color:#ff00ff;
+
+    box-shadow:
+        0 0 15px #00ffff,
+        0 0 35px #ff00ff,
+        0 0 60px #8000ff;
 }
 
 /* =========================================================
@@ -400,15 +404,11 @@ body::after{
 ========================================================= */
 
 .content{
-
     width:min(1100px,100%);
-
     text-align:center;
-
 }
 
 .content h1{
-
     font-size:
         clamp(38px,7vw,70px);
 
@@ -425,17 +425,14 @@ body::after{
     -webkit-background-clip:text;
 
     color:transparent;
-
 }
 
 .intro{
-
     color:#b8cfff;
 
     letter-spacing:2px;
 
     margin-bottom:30px;
-
 }
 
 /* =========================================================
@@ -443,7 +440,6 @@ body::after{
 ========================================================= */
 
 .options{
-
     display:grid;
 
     grid-template-columns:
@@ -452,17 +448,14 @@ body::after{
     gap:20px;
 
     margin-top:35px;
-
 }
 
 .option{
-
     min-height:130px;
 
     display:flex;
 
     justify-content:center;
-
     align-items:center;
 
     text-align:center;
@@ -499,21 +492,18 @@ body::after{
     box-shadow:
         inset 0 0 20px rgba(0,255,255,.03),
         0 0 15px rgba(0,255,255,.08);
-
 }
 
 /* =========================================================
-   CHASING LIGHT — OPTIONS
+   CHASING LIGHT
 ========================================================= */
 
 .option::before{
-
     content:"";
 
     position:absolute;
 
     width:90px;
-
     height:3px;
 
     background:
@@ -535,19 +525,14 @@ body::after{
         chaseLight 3s linear infinite;
 
     z-index:2;
-
 }
 
-/* second glow */
-
 .option::after{
-
     content:"";
 
     position:absolute;
 
     width:30px;
-
     height:30px;
 
     border-radius:50%;
@@ -560,98 +545,70 @@ body::after{
 
     animation:
         cornerGlow 3s linear infinite;
-
 }
 
 @keyframes chaseLight{
 
     0%{
-
         top:0;
         left:-90px;
         transform:rotate(0deg);
-
     }
 
     25%{
-
         top:0;
         left:100%;
         transform:rotate(90deg);
-
     }
 
     50%{
-
         top:100%;
         left:100%;
         transform:rotate(180deg);
-
     }
 
     75%{
-
         top:100%;
         left:-90px;
         transform:rotate(270deg);
-
     }
 
     100%{
-
         top:0;
         left:-90px;
         transform:rotate(360deg);
-
     }
-
 }
 
 @keyframes cornerGlow{
 
     0%{
-
         top:-15px;
         left:-15px;
-
     }
 
     25%{
-
         top:-15px;
         left:calc(100% - 15px);
-
     }
 
     50%{
-
         top:calc(100% - 15px);
         left:calc(100% - 15px);
-
     }
 
     75%{
-
         top:calc(100% - 15px);
         left:-15px;
-
     }
 
     100%{
-
         top:-15px;
         left:-15px;
-
     }
-
 }
 
-/* =========================================================
-   OPTION HOVER
-========================================================= */
-
 .option:hover{
-
     transform:
         translateY(-12px)
         scale(1.03);
@@ -662,7 +619,6 @@ body::after{
         0 0 15px #00ffff,
         0 0 40px #7b00ff,
         inset 0 0 30px rgba(255,0,255,.08);
-
 }
 
 /* =========================================================
@@ -670,17 +626,14 @@ body::after{
 ========================================================= */
 
 .cards{
-
     display:grid;
 
     gap:20px;
 
     margin-top:30px;
-
 }
 
 .content-card{
-
     position:relative;
 
     overflow:hidden;
@@ -709,21 +662,14 @@ body::after{
 
     box-shadow:
         0 0 20px rgba(0,255,255,.05);
-
 }
 
-/* =========================================================
-   CHASING LIGHT — CONTENT CARDS
-========================================================= */
-
 .content-card::before{
-
     content:"";
 
     position:absolute;
 
     width:100px;
-
     height:3px;
 
     background:
@@ -745,59 +691,42 @@ body::after{
         chaseCard 4s linear infinite;
 
     z-index:2;
-
 }
 
 @keyframes chaseCard{
 
     0%{
-
         top:0;
         left:-100px;
         transform:rotate(0deg);
-
     }
 
     25%{
-
         top:0;
         left:100%;
         transform:rotate(90deg);
-
     }
 
     50%{
-
         top:100%;
         left:100%;
         transform:rotate(180deg);
-
     }
 
     75%{
-
         top:100%;
         left:-100px;
         transform:rotate(270deg);
-
     }
 
     100%{
-
         top:0;
         left:-100px;
         transform:rotate(360deg);
-
     }
-
 }
 
-/* =========================================================
-   CARD HOVER
-========================================================= */
-
 .content-card:hover{
-
     transform:
         translateX(8px)
         scale(1.01);
@@ -807,7 +736,6 @@ body::after{
     box-shadow:
         0 0 20px rgba(0,255,255,.25),
         0 0 50px rgba(100,0,255,.15);
-
 }
 
 /* =========================================================
@@ -815,39 +743,32 @@ body::after{
 ========================================================= */
 
 .content-card strong{
-
     color:#00ffff;
 
     text-shadow:
         0 0 8px #00ffff;
-
 }
 
 .content-card h2{
-
     color:#00ffff;
 
     margin-bottom:10px;
 
     text-shadow:
         0 0 10px rgba(0,255,255,.5);
-
 }
 
 .content-card h3{
-
     color:#ff00cc;
 
     margin-bottom:10px;
-
 }
 
 /* =========================================================
-   NAME PAGE
+   NAME
 ========================================================= */
 
 .name-title{
-
     font-size:
         clamp(45px,9vw,100px);
 
@@ -860,24 +781,19 @@ body::after{
 
     animation:
         neon 2s ease-in-out infinite alternate;
-
 }
 
 @keyframes neon{
 
     to{
-
         text-shadow:
             0 0 20px #00ffff,
             0 0 60px #8000ff,
             0 0 100px #ff00cc;
-
     }
-
 }
 
 .name-number{
-
     font-size:35px;
 
     color:#ff00cc;
@@ -886,7 +802,6 @@ body::after{
 
     text-shadow:
         0 0 15px #ff00cc;
-
 }
 
 /* =========================================================
@@ -894,15 +809,12 @@ body::after{
 ========================================================= */
 
 .cost-box{
-
     margin:30px auto;
 
     max-width:700px;
-
 }
 
 .price{
-
     font-size:60px;
 
     color:#00ffff;
@@ -915,19 +827,15 @@ body::after{
 
     animation:
         priceGlow 2s ease-in-out infinite alternate;
-
 }
 
 @keyframes priceGlow{
 
     to{
-
         text-shadow:
             0 0 25px #00ffff,
             0 0 70px #8000ff;
-
     }
-
 }
 
 /* =========================================================
@@ -935,7 +843,6 @@ body::after{
 ========================================================= */
 
 .back{
-
     margin-top:35px;
 
     padding:13px 30px;
@@ -954,10 +861,10 @@ body::after{
 
     transition:.3s;
 
+    cursor:pointer;
 }
 
 .back:hover{
-
     background:#00ffff;
 
     color:#000;
@@ -966,17 +873,14 @@ body::after{
         0 0 15px #00ffff,
         0 0 40px #00ffff;
 
-    transform:
-        scale(1.05);
-
+    transform:scale(1.05);
 }
 
 /* =========================================================
-   FLOATING PARTICLES
+   PARTICLES
 ========================================================= */
 
 .particle{
-
     position:fixed;
 
     width:3px;
@@ -993,18 +897,13 @@ body::after{
         float 8s linear infinite;
 
     z-index:-1;
-
 }
 
 @keyframes float{
 
     from{
-
-        transform:
-            translateY(100vh);
-
+        transform:translateY(100vh);
         opacity:0;
-
     }
 
     20%{
@@ -1012,14 +911,9 @@ body::after{
     }
 
     to{
-
-        transform:
-            translateY(-10vh);
-
+        transform:translateY(-10vh);
         opacity:0;
-
     }
-
 }
 
 /* =========================================================
@@ -1029,82 +923,65 @@ body::after{
 @media(max-width:600px){
 
     .page{
-
-        padding:
-            70px 14px 40px;
-
+        padding:70px 14px 40px;
     }
 
     .home h1{
-
         letter-spacing:3px;
-
     }
 
     .subtitle{
-
         letter-spacing:2px;
-
     }
 
     .product{
-
         letter-spacing:2px;
-
     }
 
     .options{
-
-        grid-template-columns:
-            1fr 1fr;
-
+        grid-template-columns:1fr 1fr;
     }
 
     .option{
-
         min-height:110px;
-
         font-size:14px;
-
     }
 
     .content-card{
-
         font-size:14px;
-
     }
 
     .name-number{
-
         font-size:25px;
-
     }
 
+    .music-btn{
+        right:12px;
+        bottom:12px;
+        padding:11px 15px;
+        font-size:11px;
+    }
 }
-
-/* =========================================================
-   EXTRA SMALL PHONES
-========================================================= */
 
 @media(max-width:380px){
 
     .options{
-
         grid-template-columns:1fr;
-
     }
-
 }
-
-/* =========================================================
-   END CSS
-========================================================= */
 
 </style>
 </head>
 
-
 <body>
+
+<!-- ======================================================
+     MP3 MUSIC
+====================================================== -->
+
+<audio id="bgMusic" loop preload="auto">
+    <source src="Zero_Point_Zero_One.mp3" type="audio/mpeg">
+</audio>
 
 
 <!-- ======================================================
@@ -1139,7 +1016,7 @@ GUARDIANEYE 0.01 • AI VISION • SMART SURVEILLANCE • FUTURE SECURITY • AD
 
 
 <!-- ======================================================
-     HOME PAGE
+     HOME
 ====================================================== -->
 
 <section id="home" class="page active home">
@@ -1178,7 +1055,7 @@ FUTURE READY
 
 <button
 class="main-btn"
-onclick="showPage('options')">
+onclick="startExperience()">
 
 HIT ME!
 
@@ -1188,7 +1065,7 @@ HIT ME!
 
 
 <!-- ======================================================
-     OPTIONS PAGE
+     OPTIONS
 ====================================================== -->
 
 <section id="options" class="page">
@@ -1203,55 +1080,29 @@ GuardianEye 0.01
 SELECT AN OPTION TO EXPLORE OUR PRODUCT
 </p>
 
-
 <div class="options">
 
-<button
-class="option"
-onclick="showPage('name')">
-
+<button class="option" onclick="showPage('name')">
 NAME
-
 </button>
 
-
-<button
-class="option"
-onclick="showPage('features')">
-
+<button class="option" onclick="showPage('features')">
 FEATURES
-
 </button>
 
-
-<button
-class="option"
-onclick="showPage('advantages')">
-
+<button class="option" onclick="showPage('advantages')">
 ADVANTAGES
-
 </button>
 
-
-<button
-class="option"
-onclick="showPage('disadvantages')">
-
+<button class="option" onclick="showPage('disadvantages')">
 DISADVANTAGES
-
 </button>
 
-
-<button
-class="option"
-onclick="showPage('cost')">
-
+<button class="option" onclick="showPage('cost')">
 COST
-
 </button>
 
 </div>
-
 
 <button
 class="back"
@@ -1267,7 +1118,7 @@ onclick="showPage('home')">
 
 
 <!-- ======================================================
-     NAME PAGE
+     NAME
 ====================================================== -->
 
 <section id="name" class="page">
@@ -1282,9 +1133,7 @@ GUARDIANEYE
 0.01
 </div>
 
-
 <div class="cards">
-
 
 <div class="content-card">
 
@@ -1297,13 +1146,10 @@ Because,
 </h3>
 
 <p>
-
 This name stands for protection, advanced surveillance and the future of intelligent camera systems.
-
 </p>
 
 </div>
-
 
 <div class="content-card">
 
@@ -1312,16 +1158,12 @@ How did we come across this name?
 </h2>
 
 <p>
-
 The name was selected after considering futuristic technology, smart vision and next-generation design from internet.
-
 </p>
 
 </div>
 
-
 </div>
-
 
 <button
 class="back"
@@ -1348,90 +1190,54 @@ onclick="showPage('options')">
 FEATURES
 </h1>
 
-
 <div class="cards">
 
-
 <div class="content-card">
-
 <strong>01</strong><br>
-
 Guardianeye 0.01 has 8k clarity, night vision, and motion detection.
-
 </div>
 
-
 <div class="content-card">
-
 <strong>02</strong><br>
-
 It has a high voltage LED panel(street light). This innovation can replace street lights.
-
 </div>
 
-
 <div class="content-card">
-
 <strong>03</strong><br>
-
 Guardianeye 0.01 has a mini drone installed, which helps in tracking a vehicle or a person.
-
 </div>
 
-
 <div class="content-card">
-
 <strong>04</strong><br>
-
 It has a special speaker. It works like the normal speaker but engineering is different.
-
 </div>
 
-
 <div class="content-card">
-
 <strong>05</strong><br>
-
 Guardianeye 0.01 has a self defence system in the pole and its body (integrated electric shock)
-
 </div>
 
-
 <div class="content-card">
-
 <strong>06</strong><br>
-
 Guardianeye 0.01 uses 4 energy sources
-
 <br><br>
-
 1-Wind energy<br>
 2-Sound energy<br>
 3-Solar energy<br>
 4-Rain energy
-
 </div>
 
-
 <div class="content-card">
-
 <strong>07</strong><br>
-
 Guardianeye 0.01 has a super special feature which the present advanced cctv doesn't have. It has annesthia bullets to control people. The annesthia bomb installed, can control the crowd from fighting.
-
 </div>
 
-
 <div class="content-card">
-
 <strong>08</strong><br>
-
 Drone consists of mp3,mp4 + mp5(odour detection) features
 </div>
 
-
 </div>
-
 
 <button
 class="back"
@@ -1458,57 +1264,34 @@ onclick="showPage('options')">
 ADVANTAGES
 </h1>
 
-
 <div class="cards">
 
-
 <div class="content-card">
-
 <strong>01</strong><br>
-
 It is easy to make.
-
 </div>
 
-
 <div class="content-card">
-
 <strong>02</strong><br>
-
 No need of providing electric power supply.
-
 </div>
 
-
 <div class="content-card">
-
 <strong>03</strong><br>
-
 High accuracy, 8k vision + night vision clarity.
-
 </div>
 
-
 <div class="content-card">
-
 <strong>04</strong><br>
-
 Helps to replace street lights.
-
 </div>
-
 
 <div class="content-card">
-
 <strong>05</strong><br>
-
 Helps to control the riot or an angry mob.
-
 </div>
 
-
 </div>
-
 
 <button
 class="back"
@@ -1535,30 +1318,19 @@ onclick="showPage('options')">
 DISADVANTAGES
 </h1>
 
-
 <div class="cards">
 
-
 <div class="content-card">
-
 <strong>01</strong><br>
-
 Takes time to adjust to the surroundings (to process the situation)
-
 </div>
-
 
 <div class="content-card">
-
 <strong>02</strong><br>
-
 Requires maintenance if something happens (like tunderbolt , failure of enery suppy)
-
 </div>
 
-
 </div>
-
 
 <button
 class="back"
@@ -1585,9 +1357,7 @@ onclick="showPage('options')">
 COST
 </h1>
 
-
 <div class="cards cost-box">
-
 
 <div class="content-card">
 
@@ -1598,19 +1368,13 @@ MAKING COST
 <br>
 
 1) camera ₹5000<br>
-
 2) LIGHT ₹2000<br>
-
 3) energy supply ₹4000<br>
-
 4) bullets and bombs ₹5000<br>
-
 4) CIRCUIT ₹2000<br>
-    
- 5) Drone  ₹4000
+5) Drone ₹4000
 
 </div>
-
 
 <div class="content-card">
 
@@ -1619,16 +1383,12 @@ SELLING COST
 </h2>
 
 <div class="price">
-
 ₹22,000
-
 </div>
 
 </div>
 
-
 </div>
-
 
 <button
 class="back"
@@ -1650,6 +1410,87 @@ onclick="showPage('options')">
 <script>
 
 /* =========================================================
+   MUSIC
+========================================================= */
+
+const music =
+    document.getElementById("bgMusic");
+
+music.volume = 0.40;
+
+
+/* =========================================================
+   START EXPERIENCE
+   HIT ME! = OPEN OPTIONS + START MUSIC
+========================================================= */
+
+function startExperience(){
+
+    music.play()
+        .then(() => {
+
+            updateMusicButton(true);
+
+        })
+        .catch(() => {
+
+            console.log(
+                "Music playback needs user interaction."
+            );
+
+        });
+
+    showPage("options");
+}
+
+
+/* =========================================================
+   MUSIC ON / OFF
+========================================================= */
+
+function toggleMusic(){
+
+    if(music.paused){
+
+        music.play()
+            .then(() => {
+
+                updateMusicButton(true);
+
+            });
+
+    }else{
+
+        music.pause();
+
+        updateMusicButton(false);
+    }
+}
+
+
+/* =========================================================
+   UPDATE MUSIC BUTTON
+========================================================= */
+
+function updateMusicButton(isPlaying){
+
+    const button =
+        document.getElementById("musicButton");
+
+    if(isPlaying){
+
+        button.innerHTML =
+            "🔊 MUSIC ON";
+
+    }else{
+
+        button.innerHTML =
+            "🔇 MUSIC OFF";
+    }
+}
+
+
+/* =========================================================
    PAGE NAVIGATION
 ========================================================= */
 
@@ -1663,13 +1504,10 @@ function showPage(pageId){
 
         });
 
-
     const target =
         document.getElementById(pageId);
 
-
     target.classList.add("active");
-
 
     window.scrollTo({
 
@@ -1678,7 +1516,6 @@ function showPage(pageId){
         behavior:"smooth"
 
     });
-
 }
 
 
@@ -1691,30 +1528,36 @@ for(let i=0;i<30;i++){
     const particle =
         document.createElement("div");
 
-
     particle.className =
         "particle";
-
 
     particle.style.left =
         Math.random()*100+"%";
 
-
     particle.style.animationDuration =
         (5 + Math.random()*8)+"s";
-
 
     particle.style.animationDelay =
         Math.random()*8+"s";
 
-
     document.body.appendChild(particle);
-
 }
 
 </script>
 
 
+<!-- ======================================================
+     MUSIC BUTTON
+====================================================== -->
+
+<button
+id="musicButton"
+class="music-btn"
+onclick="toggleMusic()">
+
+🔇 MUSIC OFF
+
+</button>
+
 </body>
 </html>
-  
